@@ -1603,6 +1603,12 @@ def predict_stellar_object(features_dict: Dict[str, float]) -> Dict[str, Any]:
     Computes color indices, loads or fits models, performs dual ensemble + neural inference,
     anomaly checking, and compiles a comprehensive diagnostic brief.
     """
+    # 0. Input Validation
+    required_keys = ["u", "g", "r", "i", "z", "redshift"]
+    for k in required_keys:
+        if k not in features_dict or features_dict[k] is None:
+            raise ValueError(f"Missing required parameter '{k}' for stellar object prediction.")
+
     # 1. Feature Engineering
     u = float(features_dict["u"])
     g = float(features_dict["g"])
